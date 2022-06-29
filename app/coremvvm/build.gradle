@@ -1,9 +1,9 @@
 plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
-}
+    id "maven-publish"
 
-apply from: "publish.gradle"
+}
 
 android {
     compileSdk 32
@@ -46,4 +46,17 @@ dependencies {
     api "androidx.appcompat:appcompat:1.4.2"
 
     testApi "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            releaseLibrary(MavenPublication) {
+                from components.release
+                groupId = "com.github.johnnysc"
+                artifactId = "coremvvm"
+                version = "1.2"
+            }
+        }
+    }
 }
